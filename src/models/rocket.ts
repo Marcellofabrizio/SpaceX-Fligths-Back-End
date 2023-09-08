@@ -1,12 +1,12 @@
 import { Schema, model } from "mongoose";
 
 export interface IRocket {
-    spacexId: string;
+    _id: string;
     name: string;
 }
 
 const rocketSchema = new Schema<IRocket>({
-    spacexId: Schema.Types.ObjectId,
+    _id: Schema.Types.ObjectId,
     name: String,
 });
 
