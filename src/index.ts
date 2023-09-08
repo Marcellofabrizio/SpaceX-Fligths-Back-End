@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const { logger } = require("../utils/logger");
 import appRouter from "routes";
+import { swaggerDocument } from "../swagger";
 
 async function startServer() {
     const app = express();
@@ -13,6 +14,7 @@ async function startServer() {
     app.use(cors());
     app.use(bodyParser.json());
     app.use(appRouter);
+    app.use("/api", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
     const PORT = process.env.PORT || 3000;
 

@@ -7,9 +7,9 @@ import {
 
 const router = Router();
 
-router.get("/launches", getLaunches);
-router.get("/launches/stats/rockets", getLaunchesByRocket);
-router.get("/launches/stats/year", getLaunchesByYear);
+router.get("/v1/launches", getLaunches);
+router.get("/v1/launches/stats/rockets", getLaunchesByRocket);
+router.get("/v1/launches/stats/year", getLaunchesByYear);
 
 
 export default router;

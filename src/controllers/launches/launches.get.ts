@@ -10,7 +10,10 @@ interface IQueryDTO {
 }
 
 const DEFAULT_LIMIT = 5;
-
+/*
+    TODO
+        - Return 404 if page requested is larger than total pages
+*/
 export async function getLaunches(
     req: Request,
     res: Response,
@@ -34,7 +37,7 @@ export async function getLaunches(
         }).countDocuments();
 
         const skip = limit * page;
-        const totalPages = Math.floor(totalDocs / limit);
+        const totalPages = Math.ceil(totalDocs / limit);
         const hasPrev = page != 0;
         const hasNext = page != totalPages;
 
