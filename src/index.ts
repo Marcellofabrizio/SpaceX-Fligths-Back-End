@@ -3,14 +3,16 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const dotenv = require("dotenv");
-const { logger } = require("../utils/logger");
 const mongoose = require("mongoose");
+const { logger } = require("../utils/logger");
+import appRouter from "routes";
 
 async function startServer() {
     const app = express();
     dotenv.config();
     app.use(cors());
     app.use(bodyParser.json());
+    app.use(appRouter);
 
     const PORT = process.env.PORT || 3000;
 
