@@ -1,27 +1,13 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const swaggerUi = require("swagger-ui-express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const { logger } = require("../utils/logger");
-import appRouter from "routes";
-import { swaggerDocument } from "../swagger";
+const { app } = require("app.ts");
 
-async function startServer() {
-    const app = express();
-    dotenv.config();
-    app.use(cors());
-    app.use(bodyParser.json());
-    app.use(appRouter);
-    app.use("/api", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+const PORT = process.env.PORT || 3000;
 
-    const PORT = process.env.PORT || 3000;
+dotenv.config();
 
-    app.get("/", async (_, res) => {
-        res.send({ message: "Fullstack Challenge 🏅 - Space X API" });
-    });
-
+(async () => {
     await mongoose
         .connect(
             `mongodb+srv://${process.env.MONGODB_USR}:${process.env.MONGODB_PWD}@cluster0.gwwrw.mongodb.net/${process.env.MONGODB_DATABASE}?retryWrites=true&w=majority`
@@ -36,6 +22,4 @@ async function startServer() {
     app.listen(PORT, () => {
         logger.info(`Running on port ${PORT}`);
     });
-}
-
-startServer();
+})();

@@ -91,6 +91,7 @@ export async function getLaunchesByRocket(
                 $project: {
                     _id: 0,
                     rocket: "$_id",
+                    count: "$count",
                 },
             },
         ]);
