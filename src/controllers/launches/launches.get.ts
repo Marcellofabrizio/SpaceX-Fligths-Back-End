@@ -125,6 +125,9 @@ export async function getLaunchesByYear(
                 },
             },
             {
+                $unwind: "$rocket",
+            },
+            {
                 $addFields: {
                     date: {
                         $toDate: "$dateUtc",
