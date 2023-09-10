@@ -111,15 +111,10 @@ export const swaggerDocument = {
                     type: "array",
                     items: {
                         rocket: {
-                            type: "object",
-                            properties: {
-                                name: {
-                                    type: "array",
-                                    items: {
-                                        type: "string",
-                                    },
-                                },
-                            },
+                            type: "name",
+                        },
+                        count: {
+                            type: "number",
                         },
                     },
                 },
@@ -137,13 +132,7 @@ export const swaggerDocument = {
                                 type: "number",
                             },
                             launches: {
-                                type: "array",
-                                items: {
-                                    type: "object",
-                                    properies: {
-                                        count: "number",
-                                    },
-                                },
+                                type: "number",
                             },
                         },
                     },

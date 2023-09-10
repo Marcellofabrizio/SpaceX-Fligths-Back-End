@@ -90,8 +90,8 @@ export async function getLaunchesByRocket(
             {
                 $project: {
                     _id: 0,
-                    rocket: "$_id",
-                    count: "$count",
+                    rocket: { $arrayElemAt: ["$_id.name", 0] },
+                    count: 1,
                 },
             },
         ]);
@@ -156,7 +156,7 @@ export async function getLaunchesByYear(
                 $project: {
                     _id: 0,
                     year: "$_id",
-                    launches: "$launches",
+                    launches: { $arrayElemAt: ["$launches.count", 0] },
                 },
             },
             {
