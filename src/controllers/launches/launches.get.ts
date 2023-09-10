@@ -144,9 +144,8 @@ export async function getLaunchesByYear(
             {
                 $group: {
                     _id: {
-                        year: {
-                            $year: "$date",
-                        },
+                        year: { $year: "$date" },
+                        name: "$name",
                     },
                     count: { $sum: 1 },
                 },
