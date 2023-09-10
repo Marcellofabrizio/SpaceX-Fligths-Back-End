@@ -135,6 +135,13 @@ export async function getLaunchesByYear(
                 },
             },
             {
+                $project: {
+                    dateUtc: 1,
+                    date: 1,
+                    name: "$rocket.name",
+                },
+            },
+            {
                 $group: {
                     _id: {
                         year: {
