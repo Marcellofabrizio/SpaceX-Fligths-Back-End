@@ -2,20 +2,20 @@ import { Schema, model } from "mongoose";
 import { IRocket } from "./rocket";
 import mongoosePaginate from "mongoose-paginate-v2";
 
-export interface IFlight {
+export interface ILaunch {
     _id: string;
     flightNumber: number;
     logo: string;
     name: string;
     dateUtc: string;
     rocket: IRocket;
-    result: boolean;
+    success: boolean;
     webcast: string;
     reused: boolean;
     createdAt: Date;
 }
 
-const flightSchema = new Schema<IFlight>({
+const launchSchema = new Schema<ILaunch>({
     _id: Schema.Types.ObjectId,
     flightNumber: Number,
     logo: String,
@@ -25,14 +25,14 @@ const flightSchema = new Schema<IFlight>({
         type: Schema.Types.ObjectId,
         ref: "Rocket",
     },
-    result: Boolean,
+    success: Boolean,
     webcast: String,
     reused: Boolean,
     createdAt: Date,
 });
 
-flightSchema.plugin(mongoosePaginate);
+launchSchema.plugin(mongoosePaginate);
 
-const Flight = model("Flight", flightSchema);
+const Launch = model("Launch", launchSchema);
 
-module.exports = { Flight };
+module.exports = { Launch };

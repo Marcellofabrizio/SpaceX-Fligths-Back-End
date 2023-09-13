@@ -1,5 +1,5 @@
 import axios from "axios";
-const { Flight } = require("./src/models/flight");
+const { Launch } = require("./src/models/launch");
 const { Rocket } = require("./src/models/rocket");
 const { logger } = require("./utils/logger");
 import mongoose from "mongoose";
@@ -48,7 +48,7 @@ async function getRocketsCount(): Promise<number> {
     });
 }
 
-async function seedFlights() {
+async function seedLaunchs() {
     await mongoose
         .connect(connectionString)
         .then(() => {
@@ -63,8 +63,8 @@ async function seedFlights() {
         const response = await axios.get(
             "https://api.spacexdata.com/v5/launches"
         );
-        await Flight.bulkSave(parseFlightsResponse(response.data)).then(() => {
-            logger.info("Saved flights successfully");
+        await Launch.bulkSave(parseLaunchsResponse(response.data)).then(() => {
+            logger.info("Saved launchs successfully");
         });
     } catch (err) {
         logger.error(err);
@@ -82,24 +82,24 @@ function parseRocketsResponse(rocketsResponse) {
     });
 }
 
-function parseFlightsResponse(flightsResponse) {
-    return flightsResponse.map((flightData) => {
-        const flight = new Flight();
-        flight._id = new mongoose.mongo.ObjectId(flightData.id);
-        flight.flightNumber = flightData.flight_number;
-        flight.name = flightData.name;
-        flight.dateUtc = flightData.date_utc;
-        flight.result = flightData.result;
-        flight.logo = flightData.links.patch.small;
-        flight.webcast = flightData.links.webcast;
-        flight.article = flightData.links.article;
-        flight.reused = flightData.cores.some((core) => core.reused === true);
-        flight.createdAt = new Date().toDateString();
-        flight.rocket = new mongoose.mongo.ObjectId(flightData.rocket);
-        return flight;
+function parseLaunchsResponse(launchsResponse) {
+    return launchsResponse.map((launchData) => {
+        const launch = new Launch();
+        launch._id = new mongoose.mongo.ObjectId(launchData.id);
+        launch.flightNumber = launchData.flight_number;
+        launch.name = launchData.name;
+        launch.dateUtc = launchData.date_utc;
+        launch.success = launchData.success;
+        launch.logo = launchData.links.patch.small;
+        launch.webcast = launchData.links.webcast;
+        launch.article = launchData.links.article;
+        launch.reused = launchData.cores.some((core) => core.reused === true);
+        launch.createdAt = new Date().toDateString();
+        launch.rocket = new mongoose.mongo.ObjectId(launchData.rocket);
+        return launch;
     });
 }
 
 seedRockets();
-seedFlights();
+seedLaunchs();
 exit;

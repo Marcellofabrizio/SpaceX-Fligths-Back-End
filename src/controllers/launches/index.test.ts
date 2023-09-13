@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 
 import { app } from "../../app";
 
-const { Flight } = require("../../models/flight");
+const { Launch } = require("../../models/launch");
 const { Rocket } = require("../../models/rocket");
 const dotenv = require("dotenv");
 
@@ -22,46 +22,46 @@ describe("Launch", () => {
         rocket.name = "Test";
         await rocket.save();
 
-        const flight1 = new Flight();
-        flight1._id = new mongoose.mongo.ObjectId();
-        flight1.flightNumber = 1;
-        flight1.name = "Test Flight 1";
-        flight1.dateUtc = "2023-03-29T00:00:00.000Z";
-        flight1.logo = "Test";
-        flight1.webcast = "Test";
-        flight1.article = "Test";
-        flight1.reused = true;
-        flight1.createdAt = new Date().toDateString();
-        flight1.rocket = rocket._id;
-        await flight1.save();
+        const launch1 = new Launch();
+        launch1._id = new mongoose.mongo.ObjectId();
+        launch1.flightNumber = 1;
+        launch1.name = "Test Launch 1";
+        launch1.dateUtc = "2023-03-29T00:00:00.000Z";
+        launch1.logo = "Test";
+        launch1.webcast = "Test";
+        launch1.article = "Test";
+        launch1.reused = true;
+        launch1.createdAt = new Date().toDateString();
+        launch1.rocket = rocket._id;
+        await launch1.save();
 
-        const flight2 = new Flight();
-        flight2._id = new mongoose.mongo.ObjectId();
-        flight2.flightNumber = 2;
-        flight2.name = "Test Flight 2";
-        flight2.dateUtc = "2023-03-30T00:00:00.000Z";
-        flight2.logo = "Test";
-        flight2.webcast = "Test";
-        flight2.article = "Test";
-        flight2.reused = true;
-        flight2.createdAt = new Date().toDateString();
-        flight2.rocket = rocket._id;
-        await flight2.save();
+        const launch2 = new Launch();
+        launch2._id = new mongoose.mongo.ObjectId();
+        launch2.flightNumber = 2;
+        launch2.name = "Test Launch 2";
+        launch2.dateUtc = "2023-03-30T00:00:00.000Z";
+        launch2.logo = "Test";
+        launch2.webcast = "Test";
+        launch2.article = "Test";
+        launch2.reused = true;
+        launch2.createdAt = new Date().toDateString();
+        launch2.rocket = rocket._id;
+        await launch2.save();
     });
 
     after(async () => {
         await Rocket.deleteMany({});
-        await Flight.deleteMany({});
+        await Launch.deleteMany({});
         await mongoose.connection.close();
     });
 
     describe("GET /launches", () => {
-        it("Should return all flights when GET /launch", async () => {
+        it("Should return all launchs when GET /launch", async () => {
             const response = await request(app).get("/v1/launches");
             expect(response.body.results.length).equal(2);
         });
 
-        it("Should return only one flight when GET /launch?limit=1", async () => {
+        it("Should return only one launch when GET /launch?limit=1", async () => {
             const response = await request(app).get("/v1/launches?limit=1");
             expect(response.body.results.length).equal(1);
         });

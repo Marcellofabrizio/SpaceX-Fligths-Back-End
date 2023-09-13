@@ -8,7 +8,7 @@ export const swaggerDocument = {
     openapi: "3.0.1",
     info: {
         version: "1.0.0",
-        title: "SpaceX Flights API",
+        title: "SpaceX Launchs API",
         description: "Documentação da API do SpaceX",
         termsOfService: "",
         contact: {
@@ -67,7 +67,7 @@ export const swaggerDocument = {
                 createdAt: {
                     type: "string",
                 },
-                result: {
+                success: {
                     type: "boolean",
                 },
                 flightNumber: {

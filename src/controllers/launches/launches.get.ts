@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 
-const { Flight } = require("../../models/flight");
+const { Launch } = require("../../models/launch");
 const { Rocket } = require("../../models/rocket");
 
 interface IQueryDTO {
@@ -32,7 +32,7 @@ export async function getLaunches(
               }
             : {};
 
-        const totalDocs = await Flight.find({
+        const totalDocs = await Launch.find({
             ...query,
         }).countDocuments();
 
@@ -41,7 +41,7 @@ export async function getLaunches(
         const hasPrev = page != 0;
         const hasNext = page != totalPages;
 
-        const results = await Flight.find({
+        const results = await Launch.find({
             ...query,
         })
             .sort({
@@ -70,7 +70,7 @@ export async function getLaunchesByRocket(
     next: NextFunction
 ) {
     try {
-        const launches = await Flight.aggregate([
+        const launches = await Launch.aggregate([
             {
                 $lookup: {
                     from: "rockets",
@@ -115,7 +115,7 @@ export async function getLaunchesByYear(
     next: NextFunction
 ) {
     try {
-        const launches = await Flight.aggregate([
+        const launches = await Launch.aggregate([
             {
                 $lookup: {
                     from: "rockets",
